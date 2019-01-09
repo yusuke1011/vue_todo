@@ -1,1 +1,61 @@
-差分用
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div id="app">
+    <h1>ToDoリスト</h1>
+
+    <!-- 絞り込みラジオボタン -->
+    <label v-for="label in options">
+        <!-- v-modelディレクティブを用いてcurrentデータと双方向バインディング -->
+        <input type="radio"
+        v-model="current"
+        v-bind:value="label.value">{{ label.label }}
+    </label>
+    ：{{ computedTodos.length }} 件を表示中
+
+    <!-- ToDo テーブル -->
+    <table>
+        <!-- テーブルヘッダー -->
+        <thead>
+          <tr>
+            <th class="id">ID</th>
+            <th class="comment">コメント</th>
+            <th class="state">状態</th>
+            <th class="button">-</th>
+          </tr>
+        </thead>
+        <!-- todosの中身を繰り返し表示する -->
+        <tbody>
+            <!-- 不変でユニークな値であるidプロパティをキーとしてバインディングする -->
+            <tr v-for="item in computedTodos" v-bind:key="item.id">
+                <td>{{item.id}}</td>
+                <td>{{item.comment}}</td>
+                <td class="state">
+                    <button v-on:click="doChangeState(item)">{{item.state | convertStatus}}</button>
+                </td>
+                <td class="button">
+                    <button v-on:click="doRemove(item)">削除</button>
+                </td>
+              </tr>
+        </tbody>
+      </table>
+
+    <!-- 新規登録フォーム -->
+    <h2>新規タスクの追加</h2>
+    <form class="add-form" v-on:submit.prevent="doAdd">
+        <!-- ref属性で名前をタグにつけることで、このDOMに直接アクセスできるようにする-->
+        <input type="text" ref="comment">
+        <button type="submit">追加</button>
+    </form>
+
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
