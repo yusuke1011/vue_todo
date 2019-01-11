@@ -2,19 +2,21 @@
 // 参考：https://jp.vuejs.org/v2/examples/todomvc.html
 const STORAGE_KEY = 'todos-vuejs-demo'
 const todoStorage = {
-  fetch: function() {
-    let todos = JSON.parse(
-      localStorage.getItem(STORAGE_KEY) || '[]'
-    )
-    todos.forEach(function(todo, index) {
-      todo.id = index
-    })
-    todoStorage.uid = todos.length
-    return todos
-  },
-  save: function(todos) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-  }
+    //ローカルストレージに保存されているtodos配列を変換して返すメソッド
+    fetch() {
+        let todos = JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || '[]'
+        )
+        todos.forEach(function(todo, index) {
+        todo.id = index
+        })
+        todoStorage.uid = todos.length
+        return todos
+    },
+    //todos配列をJSON形式に変換して、ローカルストレージに保存するメソッド
+    save(todos) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+    }
 }
 
 const app = new Vue({
